@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style type="text/css">
+.big-tiao{width: 300px;
+height: 10px;
+border-radius: 5px;
+background-color: black;}
+.tiao{
+    border-radius: 5px;
+    height: 10px;
+    background-color: red;
+    width: 0px;
+}
+.box{
+    width: 60px;
+    height: 200px;
+    background-color: grey;
+    overflow: hidden;
+
+}
+.wrap{
+    width: 10px;
+    height: 160px;
+    margin: 0 auto;
+    background-color: black;
+    margin-top: 20px;
+    position: relative;
+}
+.sound{
+    width: 10px;
+    height: 10px;
+    background-color: red;
+    bottom: 0px;
+    position: absolute;
+}
+.yuan{
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: white;
+    background-color: rgba(245, 235, 235, 0.8);
+    position: absolute;
+    top: -10px;
+    left: -5px;
+}
+
+</style>
+<body>
+    <audio src="./yequ.mp3" class="mc" ></audio>
+    <button class="btn">按钮</button>
+    <div class="big-tiao">
+        <div class="tiao"></div>
+    </div>
+    <div class="box">
+        <div class="wrap">
+            <div class="sound">
+                <div class="yuan">
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        var yequ=true
+        document.querySelector(".btn").onclick=function(){
+            if(yequ){
+                document.querySelector(".mc").play()  
+                this.innerText="暂停"
+                yequ=false
+            }
+            else{
+                document.querySelector(".mc").pause()   
+                this.innerText="播放"
+                yequ=true  
+            }    
+        }
+
+        document.querySelector(".mc").ontimeupdate=function(){
+        var mictotal=document.querySelector(".mc").duration
+        var mictimer=document.querySelector(".mc").currentTime 
+        document.querySelector(".tiao").style.width=(mictimer*300)/mictotal+'px'
+        }
+       
+        document.querySelector(".wrap").onclick=function(event){
+           var a=160-(event.clientY-document.querySelector(".wrap").offsetTop)
+            var b=a/160
+            document.querySelector(".mc").volume=b 
+            document.querySelector(".sound").style.height=b*160+'px'
+            }
+      
+         document.querySelector('.big-tiao').onclick=function(event){
+          
+             document.querySelector(".tiao").style.width=event.clientX-this.offsetLeft+'px'
+            document.querySelector(".mc").currentTime=( document.querySelector(".mc").duration*event.clientX-this.offsetLeft)/300
+              
+        }
+        
+        
+
+      
+    
+    </script>
+</body>
+</html>
